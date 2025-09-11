@@ -252,3 +252,4 @@ dist/
 # Backup files
 *.bak
 *.backup
+backend/.env
