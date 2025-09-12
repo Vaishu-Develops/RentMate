@@ -2,6 +2,49 @@
 
 ![RentMate Logo](https://via.placeholder.com/800x200/3b82f6/ffffff?text=RentMate+-+Smart+Rental+Management)
 
+## 🚀 QUICK START FOR NEW USERS
+
+### 🎯 Automatic Setup (Windows)
+1. Download/clone this repository
+2. Open Command Prompt as Administrator
+3. Navigate to project folder: `cd RentMate_Hackathon`
+4. Run: `setup-for-friends.bat`
+5. Wait for both servers to start automatically
+6. Open: http://localhost:3000
+
+### 🔧 Manual Setup
+```bash
+# 1. Install dependencies
+cd backend && npm install
+cd ../frontend && npm install
+
+# 2. Start backend (Terminal 1)
+cd backend && npm run dev
+
+# 3. Start frontend (Terminal 2) 
+cd frontend && npm run dev
+
+# 4. Open browser
+# Frontend: http://localhost:3000
+# Backend: http://localhost:5000
+```
+
+### ✅ Registration Flow
+1. Open http://localhost:3000
+2. Click "Register" 
+3. Fill in form with any valid email
+4. Submit form
+5. **Check backend console for OTP** (6-digit code)
+6. Enter OTP in verification screen
+7. Start using RentMate!
+
+### ❌ Having Issues?
+- Read: `TROUBLESHOOTING-REGISTRATION.md`
+- Run test: `cd backend && node test-api-for-friends.js`
+- Check both servers are running on ports 3000 and 5000
+
+---
+
 ## 🏠 Overview
 
 RentMate is India's first comprehensive rental ecosystem that transforms the chaotic rental market into an organized, transparent, and efficient platform. Unlike existing solutions that focus on just property discovery, RentMate handles the complete rental lifecycle - from property search to lease termination.

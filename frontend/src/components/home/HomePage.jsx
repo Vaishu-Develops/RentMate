@@ -18,7 +18,32 @@ import {
   MobileNavToggle, 
   MobileNavMenu 
 } from '@/components/ui/resizable-navbar'
-import { Search, MapPin, Home, Shield, CreditCard, Headphones, Star, Users, CheckCircle } from 'lucide-react'
+import { 
+  Search, 
+  MapPin, 
+  Home, 
+  Shield, 
+  CreditCard, 
+  Headphones, 
+  Star, 
+  Users, 
+  CheckCircle,
+  Building2,
+  MessageCircle,
+  FileText,
+  Clock,
+  Zap,
+  Award,
+  Phone,
+  Eye,
+  Lock,
+  DollarSign,
+  TrendingUp,
+  UserCheck,
+  Heart,
+  ArrowRight,
+  PlayCircle
+} from 'lucide-react'
 import useAuthStore from '@/store/authStore'
 
 const HomePage = () => {
@@ -47,27 +72,33 @@ const HomePage = () => {
   const trustFeatures = [
     {
       title: "Property Verification",
-      description: "Every property physically verified for authenticity and legal compliance"
+      description: "Every property physically verified for authenticity and legal compliance",
+      icon: Shield
     },
     {
-      title: "Secure Payments",
-      description: "Digital rent collection with instant HRA receipts and secure transactions"
+      title: "Secure Payments", 
+      description: "Digital rent collection with instant HRA receipts and secure transactions",
+      icon: Lock
     },
     {
       title: "Legal Documentation",
-      description: "Smart lease agreements and automated rent receipts for tax purposes"
+      description: "Smart lease agreements and automated rent receipts for tax purposes",
+      icon: FileText
     },
     {
       title: "24/7 Support",
-      description: "Expert help when you need it with dedicated customer support team"
+      description: "Expert help when you need it with dedicated customer support team",
+      icon: Headphones
     },
     {
       title: "Direct Owner Contact",
-      description: "Connect directly with property owners without any middlemen or brokers"
+      description: "Connect directly with property owners without any middlemen or brokers",
+      icon: UserCheck
     },
     {
       title: "AI-Powered Matching",
-      description: "Smart property recommendations based on your preferences and requirements"
+      description: "Smart property recommendations based on your preferences and requirements",
+      icon: Zap
     }
   ]
 
@@ -194,55 +225,67 @@ const HomePage = () => {
         </Navbar>
 
         {/* Hero Section with Aurora Background */}
-        <AuroraBackgroundDemo className="min-h-screen">
-          <div className="text-3xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-600 dark:from-white dark:to-gray-400">
-            Find Your Perfect Rental Home
-          </div>
-          <div className="font-extralight text-base md:text-4xl text-black dark:text-white py-4 text-center">
-            India's Most Trusted Rental Platform
-          </div>
-          
-          {/* Trust Indicators */}
-          <div className="flex flex-wrap justify-center gap-8 mb-12 text-black/80 dark:text-white/80">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-black dark:text-white" />
-              <span className="font-medium">50,000+ Verified Properties</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-black dark:text-white" />
-              <span className="font-medium">Direct Owner Contact</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-black dark:text-white" />
-              <span className="font-medium">Zero Brokerage Options</span>
-            </div>
-          </div>
-
-          {/* Primary CTA with Hover Border Gradient */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-            <HoverBorderGradient
-              containerClassName="rounded-full"
-              as="button"
-              className="bg-black text-white flex items-center space-x-2 text-lg px-8 py-4 dark:bg-white dark:text-black"
-              onClick={handleGetStarted}
+        <AuroraBackgroundDemo className="min-h-screen flex flex-col justify-center items-center relative px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
             >
-              <span>🏠</span>
-              <span>Get Started - It's Free</span>
-            </HoverBorderGradient>
-          </div>
+              <h1 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-600 dark:from-white dark:to-gray-400 leading-tight">
+                Find Your Perfect Rental Home
+              </h1>
+              
+              <p className="text-lg md:text-2xl text-black/80 dark:text-white/80 font-light max-w-2xl mx-auto">
+                India's Most Trusted Rental Platform - Zero Brokerage, Verified Properties
+              </p>
+              
+              {/* Trust Indicators */}
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6 py-8">
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                  <Building2 className="w-5 h-5 text-black dark:text-white" />
+                  <span className="font-medium text-black dark:text-white">50,000+ Verified Properties</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                  <Users className="w-5 h-5 text-black dark:text-white" />
+                  <span className="font-medium text-black dark:text-white">Direct Owner Contact</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+                  <DollarSign className="w-5 h-5 text-black dark:text-white" />
+                  <span className="font-medium text-black dark:text-white">Zero Brokerage Options</span>
+                </div>
+              </div>
 
-          {/* Secondary CTA */}
-          <p className="text-black/80 dark:text-white/80 text-lg">
-            Already have property to rent?{' '}
-            <HoverBorderGradient
-              containerClassName="rounded-full inline-block"
-              as="button"
-              className="bg-transparent border-2 border-black/30 text-black px-6 py-2 text-base dark:border-white/30 dark:text-white"
-              onClick={handleListProperty}
-            >
-              List Now
-            </HoverBorderGradient>
-          </p>
+              {/* Primary CTA with Hover Border Gradient */}
+              <div className="flex justify-center items-center w-full">
+                <HoverBorderGradient
+                  containerClassName="rounded-full"
+                  as="button"
+                  className="bg-black text-white flex items-center justify-center space-x-3 text-lg px-10 py-4 dark:bg-white dark:text-black"
+                  onClick={handleGetStarted}
+                >
+                  <Home className="w-5 h-5" />
+                  <span>Get Started - It's Free</span>
+                </HoverBorderGradient>
+              </div>
+
+              {/* Secondary text with List Property option */}
+              <p className="text-black/60 dark:text-white/60 text-base">
+                Join 100,000+ happy users • No hidden fees • Instant verification
+              </p>
+              
+              <p className="text-black/70 dark:text-white/70 text-sm">
+                Already have property to rent?{' '}
+                <button 
+                  onClick={handleListProperty}
+                  className="text-black dark:text-white underline hover:no-underline font-medium"
+                >
+                  List it here
+                </button>
+              </p>
+            </motion.div>
+          </div>
         </AuroraBackgroundDemo>
 
         {/* How It Works Section */}
@@ -259,53 +302,58 @@ const HomePage = () => {
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
                 {
                   step: "1",
-                  icon: "🔍",
+                  icon: Search,
                   title: "Discover",
-                  description: "Browse verified properties in your city"
+                  description: "Browse verified properties in your city with detailed photos and information"
                 },
                 {
                   step: "2", 
-                  icon: "💬",
+                  icon: MessageCircle,
                   title: "Connect",
-                  description: "Chat directly with property owners"
+                  description: "Chat directly with property owners through our secure messaging platform"
                 },
                 {
                   step: "3",
-                  icon: "🏠", 
+                  icon: Home, 
                   title: "Move In",
-                  description: "Complete paperwork digitally and move in hassle-free"
+                  description: "Complete paperwork digitally and move in hassle-free with our guided process"
                 }
               ].map((step, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="text-center"
+                  className="text-center group"
                 >
-                  <div className="text-6xl mb-4">{step.icon}</div>
-                  <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 dark:bg-white dark:text-black">
-                    {step.step}
+                  <div className="relative mb-6">
+                    <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <step.icon className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold dark:bg-white dark:text-black">
+                      {step.step}
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-black dark:text-white mb-2">
+                  <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{step.description}</p>
                 </motion.div>
               ))}
             </div>
 
-            <div className="text-center mt-12">
+            <div className="flex justify-center mt-12">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
-                className="bg-black text-white flex items-center space-x-2 text-lg px-8 py-4 dark:bg-white dark:text-black"
+                className="bg-black text-white flex items-center justify-center space-x-2 text-lg px-8 py-4 dark:bg-white dark:text-black mx-auto"
                 onClick={() => handleCitySelect('Coimbatore')}
               >
+                <Search className="w-5 h-5" />
                 <span>See Properties in Your City</span>
               </HoverBorderGradient>
             </div>
@@ -324,29 +372,38 @@ const HomePage = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
                 Available in Your City
               </h2>
+              <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                We're expanding across India's major cities to bring you the best rental experience
+              </p>
             </motion.div>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              {availableCities.slice(0, 6).map((city) => (
-                <button
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
+              {availableCities.slice(0, 8).map((city, index) => (
+                <motion.button
                   key={city}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                   onClick={() => handleCitySelect(city)}
-                  className="px-6 py-3 bg-white hover:bg-black hover:text-white rounded-lg font-medium transition-colors border-2 border-black/10 dark:bg-gray-700 dark:hover:bg-white dark:hover:text-black dark:border-white/10"
+                  className="group relative p-6 bg-white hover:bg-black hover:text-white rounded-xl font-medium transition-all duration-300 border-2 border-gray-100 hover:border-black dark:bg-gray-700 dark:hover:bg-white dark:hover:text-black dark:border-gray-600 dark:hover:border-white shadow-sm hover:shadow-lg"
                 >
-                  {city}
-                </button>
+                  <div className="flex flex-col items-center space-y-2">
+                    <MapPin className="w-5 h-5 text-gray-400 group-hover:text-current transition-colors" />
+                    <span className="text-sm font-medium">{city}</span>
+                  </div>
+                </motion.button>
               ))}
-              <button
-                onClick={() => handleCitySelect('more')}
-                className="px-6 py-3 bg-white hover:bg-black hover:text-white rounded-lg font-medium transition-colors border-2 border-black/10 dark:bg-gray-700 dark:hover:bg-white dark:hover:text-black dark:border-white/10"
-              >
-                More Cities
-              </button>
             </div>
 
-            <p className="text-center text-gray-600 dark:text-gray-400">
-              Select your city to see available properties
-            </p>
+            <div className="text-center">
+              <button
+                onClick={() => handleCitySelect('more')}
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-white hover:bg-black hover:text-white rounded-lg font-medium transition-colors border-2 border-black/10 dark:bg-gray-700 dark:hover:bg-white dark:hover:text-black dark:border-white/10"
+              >
+                <span>Explore More Cities</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </section>
 
@@ -362,17 +419,47 @@ const HomePage = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
                 Why Choose RentMate?
               </h2>
+              <p className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mx-auto">
+                Experience the future of rental with our comprehensive platform designed for modern living
+              </p>
             </motion.div>
 
-            <HoverEffect items={trustFeatures} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {trustFeatures.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group p-6 bg-gray-50 hover:bg-white rounded-xl transition-all duration-300 hover:shadow-lg dark:bg-gray-800 dark:hover:bg-gray-700"
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <feature.icon className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
 
-            <div className="text-center mt-12">
+            <div className="flex justify-center mt-12">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
-                className="bg-black text-white flex items-center space-x-2 text-lg px-8 py-4 dark:bg-white dark:text-black"
+                className="bg-black text-white flex items-center justify-center space-x-2 text-lg px-8 py-4 dark:bg-white dark:text-black mx-auto"
                 onClick={handleGetStarted}
               >
+                <Heart className="w-5 h-5" />
                 <span>Join 100,000+ Happy Users</span>
               </HoverBorderGradient>
             </div>
@@ -391,27 +478,42 @@ const HomePage = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
                 What Our Users Say
               </h2>
+              <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+                Real stories from real people who found their perfect home with RentMate
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group"
                 >
-                  <Card className="p-6 h-full">
-                    <CardContent className="p-0">
-                      <div className="flex mb-3">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        ))}
+                  <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2">
+                    <CardContent className="p-0 space-y-4">
+                      <div className="flex justify-between items-start">
+                        <div className="flex">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </div>
+                        <Award className="w-5 h-5 text-blue-500" />
                       </div>
-                      <p className="text-gray-700 dark:text-gray-300 mb-4 italic">"{testimonial.quote}"</p>
-                      <div>
-                        <p className="font-semibold text-black dark:text-white">- {testimonial.author}</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
+                      
+                      <blockquote className="text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                        "{testimonial.quote}"
+                      </blockquote>
+                      
+                      <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <p className="font-semibold text-black dark:text-white">
+                          {testimonial.author}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          {testimonial.role}
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -419,12 +521,13 @@ const HomePage = () => {
               ))}
             </div>
 
-            <div className="text-center mt-12">
+            <div className="flex justify-center mt-12">
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
-                className="bg-transparent border-2 border-black text-black flex items-center space-x-2 text-lg px-8 py-4 dark:border-white dark:text-white"
+                className="bg-transparent border-2 border-black text-black flex items-center justify-center space-x-2 text-lg px-8 py-4 dark:border-white dark:text-white mx-auto"
               >
+                <PlayCircle className="w-5 h-5" />
                 <span>Read More Success Stories</span>
               </HoverBorderGradient>
             </div>
@@ -432,36 +535,64 @@ const HomePage = () => {
         </section>
 
         {/* Final CTA */}
-        <section className="py-20 bg-black text-white dark:bg-white dark:text-black">
+        <section className="py-20 bg-gradient-to-r from-black to-gray-900 text-white dark:from-white dark:to-gray-100 dark:text-black">
           <div className="container mx-auto px-4 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              className="max-w-4xl mx-auto"
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 bg-white/10 rounded-full dark:bg-black/10">
+                  <Home className="w-12 h-12" />
+                </div>
+              </div>
+              
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">
                 Ready to Find Your Home?
               </h2>
-              <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-                No spam, no hidden fees, no complicated setup
+              
+              <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90 leading-relaxed">
+                Join thousands of satisfied customers who found their perfect rental home. 
+                No spam, no hidden fees, no complicated setup.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 w-full">
                 <HoverBorderGradient
-                  containerClassName="rounded-full"
+                  containerClassName="rounded-full w-full sm:w-auto"
                   as="button"
-                  className="bg-white text-black hover:bg-gray-100 flex items-center space-x-2 text-lg px-8 py-4 dark:bg-black dark:text-white dark:hover:bg-gray-800"
+                  className="bg-white text-black hover:bg-gray-100 flex items-center justify-center space-x-2 text-lg px-8 py-4 dark:bg-black dark:text-white dark:hover:bg-gray-800 min-w-[240px] w-full sm:w-auto"
                   onClick={handleGetStarted}
                 >
+                  <UserCheck className="w-5 h-5" />
                   <span>Create Free Account</span>
                 </HoverBorderGradient>
+                
                 <HoverBorderGradient
-                  containerClassName="rounded-full"
+                  containerClassName="rounded-full w-full sm:w-auto"
                   as="button"
-                  className="bg-transparent border-2 border-white/30 text-white flex items-center space-x-2 text-lg px-8 py-4 dark:border-black/30 dark:text-black"
+                  className="bg-transparent border-2 border-white/30 text-white flex items-center justify-center space-x-2 text-lg px-8 py-4 dark:border-black/30 dark:text-black min-w-[240px] w-full sm:w-auto"
                   onClick={handleListProperty}
                 >
+                  <Building2 className="w-5 h-5" />
                   <span>List Your Property</span>
                 </HoverBorderGradient>
+              </div>
+              
+              <div className="flex flex-wrap justify-center items-center gap-6 text-sm opacity-75">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Free Forever</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  <span>Setup in 2 minutes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4" />
+                  <span>100% Secure</span>
+                </div>
               </div>
             </motion.div>
           </div>

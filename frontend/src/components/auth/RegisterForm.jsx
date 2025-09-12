@@ -76,6 +76,7 @@ const RegisterForm = () => {
     setIsLoading(true)
     const registrationData = {
       ...data,
+      confirmPassword: data.password, // Add confirmPassword field
       intent,
       initialRole: intentOptions.find(opt => opt.id === intent)?.initialRole || 'commonUser'
     }
@@ -396,13 +397,12 @@ const RegisterForm = () => {
                 </Button>
 
                 <button 
-                  onClick={handleResendOTP}
-                  disabled={!canResend || isLoading}
+                  onClick={handleResendOTP}                disabled={!canResend || isLoading}
                   className={`text-sm ${canResend && !isLoading 
                     ? 'text-black hover:underline dark:text-white cursor-pointer' 
                     : 'text-gray-400 cursor-not-allowed'}`}
                 >
-                  {isLoading ? 'Sending...' : canResend ? 'Resend Code' : 'Didn\'t receive the code? Resend'}
+                  {isLoading ? 'Sending...' : canResend ? 'Resend Code' : "Didn't receive the code? Resend"}
                 </button>
               </div>
             </motion.div>

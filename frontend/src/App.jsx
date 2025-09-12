@@ -6,6 +6,7 @@ import Navigation from './components/navigation/Navigation'
 import HomePage from './components/home/HomePage'
 import LoginForm from './components/auth/LoginForm'
 import RegisterForm from './components/auth/RegisterForm'
+import LandlordDashboard from './components/dashboard/landlord/LandlordDashboard'
 import './index.css'
 
 // Create a client
@@ -199,7 +200,6 @@ function App() {
 const SearchPage = () => <div className="min-h-screen pt-20 px-4">Search Page - Coming Soon</div>
 const PropertyDetailPage = () => <div className="min-h-screen pt-20 px-4">Property Detail Page - Coming Soon</div>
 const DashboardPage = () => <div className="min-h-screen pt-20 px-4">Dashboard - Coming Soon</div>
-const LandlordDashboard = () => <div className="min-h-screen pt-20 px-4">Landlord Dashboard - Coming Soon</div>
 const TenantDashboard = () => <div className="min-h-screen pt-20 px-4">Tenant Dashboard - Coming Soon</div>
 const ListPropertyPage = () => <div className="min-h-screen pt-20 px-4">List Property - Coming Soon</div>
 const ApplicationPage = () => <div className="min-h-screen pt-20 px-4">Application Page - Coming Soon</div>
