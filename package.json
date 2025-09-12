@@ -12,7 +12,13 @@
     "setup": "node install.js",
     "start": "npm run dev"
   },
-  "keywords": ["rental", "property", "management", "MERN", "AI"],
+  "keywords": [
+    "rental",
+    "property",
+    "management",
+    "MERN",
+    "AI"
+  ],
   "author": "RentMate Team",
   "license": "MIT",
   "devDependencies": {
