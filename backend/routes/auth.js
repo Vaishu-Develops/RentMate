@@ -23,6 +23,78 @@ const generateRefreshToken = (id) => {
   })
 }
 
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Authentication]
+ *     description: Register a new user with progressive role detection
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - fullName
+ *               - email
+ *               - phone
+ *               - password
+ *               - city
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *                 description: User's full name
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: User's email address
+ *               phone:
+ *                 type: string
+ *                 description: User's phone number (Indian format)
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: User's password (min 6 characters)
+ *               city:
+ *                 type: string
+ *                 description: User's city
+ *               state:
+ *                 type: string
+ *                 description: User's state
+ *               intent:
+ *                 type: string
+ *                 enum: [search, list, explore]
+ *                 description: User's intent for registration
+ *               initialRole:
+ *                 type: string
+ *                 enum: [commonUser, landlord, tenant]
+ *                 description: Initial role based on intent
+ *     responses:
+ *       201:
+ *         description: Registration successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Registration successful. Please check your email for verification.
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       type: object
+ *       400:
+ *         description: Bad request - validation error
+ *       500:
+ *         description: Server error
+ */
 // @desc    Register user with progressive role detection
 // @route   POST /api/auth/register
 // @access  Public
@@ -101,28 +173,56 @@ const register = async (req, res) => {
         totalProperties: 0,
         verificationStatus: 'pending',
         businessDetails: {},
-        rating: { average: 0, count: 0 }
-      }
+        rating: { average: 0, count: 0 }      }
       await user.save()
-    }
-
-    // Send verification email
+    }    // Send verification email
     try {
       const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${emailVerificationToken}`
       
-      await sendEmail({
-        email: user.email,
-        subject: 'RentMate - Verify Your Email Address',
-        templateName: 'emailVerification',
-        templateData: {
-          fullName: user.personalInfo.name,
-          verificationUrl,
-          verificationCode: emailVerificationToken.substring(0, 6).toUpperCase()
-        }
-      })
+      // In development, make email sending non-blocking
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📧 Development mode: Email sending in background...')
+        console.log(`📧 Verification URL: ${verificationUrl}`)
+        console.log(`📧 Verification Code: ${emailVerificationToken.substring(0, 6).toUpperCase()}`)
+        
+        // Send email in background (don't wait for it)
+        sendEmail({
+          email: user.email,
+          subject: 'RentMate - Verify Your Email Address',
+          templateName: 'emailVerification',
+          templateData: {
+            fullName: user.personalInfo.name,
+            verificationUrl,
+            verificationCode: emailVerificationToken.substring(0, 6).toUpperCase()
+          }
+        }).catch(error => {
+          console.error('📧 Background email sending failed:', error.message)
+        })
+      } else {
+        // In production, wait for email to send
+        await sendEmail({
+          email: user.email,
+          subject: 'RentMate - Verify Your Email Address',
+          templateName: 'emailVerification',
+          templateData: {
+            fullName: user.personalInfo.name,
+            verificationUrl,
+            verificationCode: emailVerificationToken.substring(0, 6).toUpperCase()
+          }
+        })
+      }
     } catch (emailError) {
       console.error('Email sending failed:', emailError)
-      // Don't fail registration if email fails
+      // Don't fail registration if email fails in development
+      if (process.env.NODE_ENV !== 'development') {
+        // In production, we might want to fail registration if email fails
+        // Uncomment the following lines if you want strict email requirement:
+        // user.deleteOne()
+        // return res.status(500).json({
+        //   success: false,
+        //   message: 'Registration failed. Please try again.'
+        // })
+      }
     }
 
     res.status(201).json({
@@ -148,6 +248,65 @@ const register = async (req, res) => {
   }
 }
 
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Log in a user
+ *     tags: [Authentication]
+ *     description: Authenticate a user and return a JWT token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: User's email address
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: User's password
+ *               rememberMe:
+ *                 type: boolean
+ *                 description: Remember login for extended period
+ *                 default: false
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Login successful
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       type: object
+ *                     token:
+ *                       type: string
+ *                     refreshToken:
+ *                       type: string
+ *                     expiresIn:
+ *                       type: string
+ *       401:
+ *         description: Unauthorized - invalid credentials
+ *       500:
+ *         description: Server error
+ */
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
@@ -234,6 +393,33 @@ const login = async (req, res) => {
   }
 }
 
+/**
+ * @swagger
+ * /auth/verify-email:
+ *   post:
+ *     summary: Verify user email address
+ *     tags: [Authentication]
+ *     description: Verify email using token sent to user's email
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 description: Verification token (6-digit code or full token)
+ *     responses:
+ *       200:
+ *         description: Email verified successfully
+ *       400:
+ *         description: Invalid or expired token
+ *       500:
+ *         description: Server error
+ */
 // @desc    Verify email address
 // @route   POST /api/auth/verify-email
 // @access  Public
@@ -316,6 +502,36 @@ const verifyEmail = async (req, res) => {
   }
 }
 
+/**
+ * @swagger
+ * /auth/me:
+ *   get:
+ *     summary: Get current user profile
+ *     tags: [Authentication]
+ *     description: Get the profile of the currently authenticated user
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User profile retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     user:
+ *                       type: object
+ *       401:
+ *         description: Unauthorized - invalid or missing token
+ *       500:
+ *         description: Server error
+ */
 // @desc    Get current logged in user
 // @route   GET /api/auth/me
 // @access  Private

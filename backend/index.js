@@ -110,6 +110,18 @@ app.get('/health', (req, res) => {
 // API Routes
 try {
   const authRoutes = require('./routes/auth')
+  
+  // Setup Swagger UI
+  const { swaggerSpec, swaggerUi } = require('./swagger')
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+    customCss: '.swagger-ui .topbar { display: none }',
+    swaggerOptions: {
+      docExpansion: 'none'
+    }
+  }));
+  console.log('✅ Swagger API docs mounted at /api/docs')
+  
   app.use('/api/auth', authRoutes)
   console.log('✅ Auth routes loaded successfully')
   
