@@ -7,6 +7,7 @@ import { AuroraBackgroundDemo } from '@/components/ui/aurora-background-demo'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { HoverEffect } from '@/components/ui/card-hover-effect'
 import LogoutButton from '@/components/ui/LogoutButton'
+import AuthDebug from '@/components/debug/AuthDebug'
 import { 
   Navbar, 
   NavBody, 
@@ -58,9 +59,9 @@ const HomePage = () => {
     { name: "Cities", link: "#cities" },
     { name: "Success Stories", link: "#testimonials" }
   ]
-
   // Navigation items for authenticated users
   const authenticatedNavItems = [
+    { name: "Home", link: "/" },
     { name: "Dashboard", link: "/dashboard" },
     { name: "Search", link: "/search" },
     { name: "Messages", link: "/messages" }
@@ -640,8 +641,14 @@ const HomePage = () => {
               />
             </div>
           </MobileNavMenu>
-        </MobileNav>
-      </Navbar>
+        </MobileNav>      </Navbar>
+
+      {/* Debug Panel - Development Only */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <AuthDebug />
+        </div>
+      )}
 
       {/* Personalized Header */}
       <section className="pt-32 pb-8 px-4 bg-white">

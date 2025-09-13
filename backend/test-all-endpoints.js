@@ -12,8 +12,8 @@ const testUser = {
   confirmPassword: 'password123',
   city: 'Chennai',
   state: 'Tamil Nadu',
-  intent: 'explore',
-  initialRole: 'commonUser',
+  intent: 'list', // This will add landlord role
+  initialRole: 'landlord',
   agreeToTerms: true
 };
 
@@ -205,6 +205,36 @@ async function testForgotPasswordEndpoint() {
   }
 }
 
+async function testAddRoleEndpoint() {
+  try {
+    log('blue', '\n=== Testing Add Role Endpoint ===');
+    
+    if (!authToken) {
+      log('yellow', '⚠️ POST /api/auth/add-role - SKIPPED (no auth token)');
+      return false;
+    }
+    
+    const roleData = {
+      role: 'tenant'
+    };
+    
+    const response = await axios.post(`${API_URL}/api/auth/add-role`, roleData, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+    
+    log('green', '✅ POST /api/auth/add-role - SUCCESS');
+    console.log('Response:', response.data);
+    return true;
+  } catch (error) {
+    log('red', '❌ POST /api/auth/add-role - FAILED');
+    console.log('Error status:', error.response?.status);
+    console.log('Error data:', error.response?.data);
+    return false;
+  }
+}
+
 async function testSwitchRoleEndpoint() {
   try {
     log('blue', '\n=== Testing Switch Role Endpoint ===');
@@ -212,6 +242,22 @@ async function testSwitchRoleEndpoint() {
     if (!authToken) {
       log('yellow', '⚠️ POST /api/auth/switch-role - SKIPPED (no auth token)');
       return false;
+    }
+    
+    // First, add tenant role to the user to enable role switching
+    log('blue', '📝 Adding tenant role to user for testing...');
+    try {
+      const addRoleResponse = await axios.post(`${API_URL}/api/auth/add-role`, {
+        role: 'tenant'
+      }, {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      });
+      log('green', '✅ Added tenant role to user');
+    } catch (roleError) {
+      log('yellow', '⚠️ Could not add tenant role, testing with existing roles');
+      console.log('Role error:', roleError.response?.data || roleError.message);
     }
     
     const roleData = {
@@ -245,8 +291,8 @@ async function runAllTests() {
   results.push(await testRegisterEndpoint());
   results.push(await testLoginEndpoint());
   results.push(await testVerifyEmailEndpoint());
-  results.push(await testGetMeEndpoint());
-  results.push(await testUpdateProfileEndpoint());
+  results.push(await testGetMeEndpoint());  results.push(await testUpdateProfileEndpoint());
+  results.push(await testAddRoleEndpoint());
   results.push(await testResendOTPEndpoint());
   results.push(await testForgotPasswordEndpoint());
   results.push(await testSwitchRoleEndpoint());

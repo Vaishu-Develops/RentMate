@@ -4,60 +4,69 @@
 
 @layer base {
   :root {
-    /* Black & White Theme */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 0%;
+    /* RentMate Tiffany Blue Theme */
+    --background: 0 0% 100%; /* #FFFFFF - White */
+    --foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --card: 0 0% 100%; /* #FFFFFF - White */
+    --card-foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --popover: 0 0% 100%; /* #FFFFFF - White */
+    --popover-foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --primary: 174 45% 67%; /* #81D4BB - Tiffany Blue */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --secondary: 200 25% 75%; /* #B5D0D9 - Columbia Blue */
+    --secondary-foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --muted: 270 15% 82%; /* #CEC5DD - Light Thistle */
+    --muted-foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --accent: 320 25% 82%; /* #E3C0D5 - Thistle */
+    --accent-foreground: 220 8% 15%; /* #26262A - Raisin Black */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 0%;
+    --border: 270 15% 82%; /* #CEC5DD - Light Thistle */
+    --input: 0 0% 100%; /* #FFFFFF - White */
+    --ring: 174 45% 67%; /* #81D4BB - Tiffany Blue */
     --radius: 0.5rem;
     
+    /* RentMate Brand Colors */
+    --brand-primary: 174 45% 67%; /* #81D4BB - Tiffany Blue */
+    --brand-secondary: 200 25% 75%; /* #B5D0D9 - Columbia Blue */
+    --brand-accent: 320 25% 82%; /* #E3C0D5 - Thistle */
+    --brand-neutral-light: 0 0% 100%; /* #FFFFFF - White */
+    --brand-neutral-medium: 270 15% 82%; /* #CEC5DD - Light Thistle */
+    --brand-neutral-dark: 220 8% 15%; /* #26262A - Raisin Black */
+    --brand-contrast: 0 0% 7%; /* #131313 - Night */
+    
     /* Aurora colors for backgrounds */
-    --aurora-primary: 0 0% 0%;
-    --aurora-secondary: 0 0% 20%;
-    --aurora-accent: 0 0% 40%;
+    --aurora-primary: 174 45% 67%;
+    --aurora-secondary: 200 25% 75%;
+    --aurora-accent: 320 25% 82%;
   }
 
   .dark {
-    /* Dark mode - inverted black & white */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 10%;
-    --accent-foreground: 0 0% 100%;
+    /* Dark mode with Tiffany Blue accents */
+    --background: 220 8% 15%; /* #26262A - Raisin Black */
+    --foreground: 0 0% 100%; /* #FFFFFF - White */
+    --card: 0 0% 7%; /* #131313 - Night */
+    --card-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --popover: 0 0% 7%; /* #131313 - Night */
+    --popover-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --primary: 174 45% 67%; /* #81D4BB - Tiffany Blue */
+    --primary-foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --secondary: 200 25% 75%; /* #B5D0D9 - Columbia Blue */
+    --secondary-foreground: 220 8% 15%; /* #26262A - Raisin Black */
+    --muted: 270 15% 25%; /* Darker version of Light Thistle */
+    --muted-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --accent: 320 25% 30%; /* Darker version of Thistle */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF - White */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 100%;
+    --border: 270 15% 25%; /* Darker Light Thistle */
+    --input: 0 0% 7%; /* #131313 - Night */
+    --ring: 174 45% 67%; /* #81D4BB - Tiffany Blue */
     
     /* Aurora colors for dark mode */
-    --aurora-primary: 0 0% 100%;
-    --aurora-secondary: 0 0% 80%;
-    --aurora-accent: 0 0% 60%;
+    --aurora-primary: 174 45% 67%;
+    --aurora-secondary: 200 25% 75%;
+    --aurora-accent: 320 25% 82%;
   }
 }
 

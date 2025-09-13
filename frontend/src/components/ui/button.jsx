@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils"
 
 const Button = React.forwardRef(({ className, variant = "default", size = "default", ...props }, ref) => {
   const variants = {
-    default: "bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200",
+    default: "bg-[#B399D4] text-white hover:bg-[#A085C4] shadow-sm", // Purple color
     destructive: "bg-red-600 text-white hover:bg-red-700",
-    outline: "border-2 border-black bg-transparent text-black hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black",
-    secondary: "bg-gray-100 text-black hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700",
-    ghost: "hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white",
-    link: "text-black underline-offset-4 hover:underline dark:text-white",
+    outline: "border-2 border-[#B399D4] bg-transparent text-[#B399D4] hover:bg-[#B399D4] hover:text-white",
+    secondary: "bg-[#A085C4] text-white hover:bg-[#8F71B4]", // Darker purple
+    ghost: "hover:bg-accent hover:text-accent-foreground",
+    link: "text-[#B399D4] underline-offset-4 hover:underline",
   }
 
   const sizes = {
