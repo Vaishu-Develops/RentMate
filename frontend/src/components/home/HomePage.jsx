@@ -7,6 +7,7 @@ import { AuroraBackgroundDemo } from '@/components/ui/aurora-background-demo'
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import { HoverEffect } from '@/components/ui/card-hover-effect'
 import LogoutButton from '@/components/ui/LogoutButton'
+import AuthDebug from '@/components/debug/AuthDebug'
 import { 
   Navbar, 
   NavBody, 
@@ -33,9 +34,9 @@ const HomePage = () => {
     { name: "Cities", link: "#cities" },
     { name: "Success Stories", link: "#testimonials" }
   ]
-
   // Navigation items for authenticated users
   const authenticatedNavItems = [
+    { name: "Home", link: "/" },
     { name: "Dashboard", link: "/dashboard" },
     { name: "Search", link: "/search" },
     { name: "Messages", link: "/messages" }
@@ -195,25 +196,25 @@ const HomePage = () => {
 
         {/* Hero Section with Aurora Background */}
         <AuroraBackgroundDemo className="min-h-screen">
-          <div className="text-3xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-600 dark:from-white dark:to-gray-400">
+          <div className="text-3xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-raisin to-tiffany">
             Find Your Perfect Rental Home
           </div>
-          <div className="font-extralight text-base md:text-4xl text-black dark:text-white py-4 text-center">
+          <div className="font-extralight text-base md:text-4xl text-raisin py-4 text-center">
             India's Most Trusted Rental Platform
           </div>
           
           {/* Trust Indicators */}
-          <div className="flex flex-wrap justify-center gap-8 mb-12 text-black/80 dark:text-white/80">
+          <div className="flex flex-wrap justify-center gap-8 mb-12 text-raisin/80">
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-black dark:text-white" />
+              <CheckCircle className="w-5 h-5 text-tiffany" />
               <span className="font-medium">50,000+ Verified Properties</span>
             </div>
             <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-black dark:text-white" />
+              <Users className="w-5 h-5 text-tiffany" />
               <span className="font-medium">Direct Owner Contact</span>
             </div>
             <div className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-black dark:text-white" />
+              <Shield className="w-5 h-5 text-tiffany" />
               <span className="font-medium">Zero Brokerage Options</span>
             </div>
           </div>
@@ -520,8 +521,14 @@ const HomePage = () => {
               />
             </div>
           </MobileNavMenu>
-        </MobileNav>
-      </Navbar>
+        </MobileNav>      </Navbar>
+
+      {/* Debug Panel - Development Only */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <AuthDebug />
+        </div>
+      )}
 
       {/* Personalized Header */}
       <section className="pt-32 pb-8 px-4 bg-white">

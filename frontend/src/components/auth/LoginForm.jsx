@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,27 +14,24 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm()
   const setUser = useAuthStore(state => state.setUser)
+  const navigate = useNavigate()
 
   const onSubmit = async (data) => {
     setIsLoading(true)
     try {
+      console.log('🔐 Attempting login...')
       const response = await authAPI.login(data)
       
       if (response.data.success) {
-        setUser(response.data.user, response.data.token)
+        console.log('✅ Login successful, setting user data:', response.data.data.user)
+        setUser(response.data.data.user, response.data.data.token)
         
-        // Redirect based on user's active role
-        const user = response.data.user
-        if (user.activeRole === 'landlord') {
-          window.location.href = '/dashboard/landlord'
-        } else if (user.activeRole === 'tenant') {
-          window.location.href = '/dashboard/tenant'
-        } else {
-          window.location.href = '/dashboard'
-        }
+        console.log('🔄 Redirecting to dashboard...')
+        // Use React Router navigation instead of window.location.href
+        navigate('/dashboard', { replace: true })
       }
     } catch (error) {
-      console.error('Login error:', error)
+      console.error('❌ Login error:', error)
       // Handle error (show toast, etc.)
     } finally {
       setIsLoading(false)
