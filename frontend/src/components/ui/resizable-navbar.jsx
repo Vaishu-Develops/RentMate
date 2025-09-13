@@ -176,9 +176,11 @@ export const NavbarLogo = () => {
       href="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
-      <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-        <span className="text-white font-bold text-lg">🏠</span>
-      </div>
+      <img
+        src="/rent-logo.png"
+        alt="RentMate Logo"
+        className="h-8 w-8 rounded-lg object-contain border border-gray-300 bg-white shadow-sm"
+      />
       <span className="font-bold text-xl text-black dark:text-white">RentMate</span>
     </a>
   );

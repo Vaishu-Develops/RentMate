@@ -520,17 +520,6 @@ const HomePage = () => {
                 </motion.div>
               ))}
             </div>
-
-            <div className="flex justify-center mt-12">
-              <HoverBorderGradient
-                containerClassName="rounded-full"
-                as="button"
-                className="bg-transparent border-2 border-black text-black flex items-center justify-center space-x-2 text-lg px-8 py-4 dark:border-white dark:text-white mx-auto"
-              >
-                <PlayCircle className="w-5 h-5" />
-                <span>Read More Success Stories</span>
-              </HoverBorderGradient>
-            </div>
           </div>
         </section>
 
