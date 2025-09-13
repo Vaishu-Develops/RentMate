@@ -4,9 +4,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useAuthStore from './store/authStore'
 import Navigation from './components/navigation/Navigation'
 import HomePage from './components/home/HomePage'
+import UnifiedHomePage from './components/home/UnifiedHomePage'
 import LoginForm from './components/auth/LoginForm'
 import RegisterForm from './components/auth/RegisterForm'
-import LandlordDashboard from './components/dashboard/landlord/LandlordDashboard'
+import ProfilePage from './components/profile/ProfilePage'
+import TenantDashboard from './components/pages/TenantDashboard';
+import LandlordDashboard from './components/pages/LandlordDashboard';
+import PropertySeekerDashboard from './components/pages/PropertySeekerDashboard';
+import SmartDashboard from './components/routing/SmartDashboard';
+import DashboardTest from './components/debug/DashboardTest';
 import './index.css'
 
 // Create a client
@@ -36,20 +42,25 @@ const ProtectedRoute = ({ children, requiredRole = null }) => {
 
 // Public Route Component (redirect if authenticated)
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated, activeRole } = useAuthStore()
+  const { isAuthenticated } = useAuthStore()
   
   if (isAuthenticated) {
-    // Redirect based on active role
-    if (activeRole === 'landlord') {
-      return <Navigate to="/dashboard/landlord" replace />
-    } else if (activeRole === 'tenant') {
-      return <Navigate to="/dashboard/tenant" replace />
-    } else {
-      return <Navigate to="/dashboard" replace />
-    }
+    // Redirect authenticated users directly to dashboard
+    return <Navigate to="/dashboard" replace />
   }
   
   return children
+}
+
+// Home Route Component (shows different content based on auth status)
+const HomeRoute = () => {
+  const { isAuthenticated } = useAuthStore()
+  
+  if (isAuthenticated) {
+    return <UnifiedHomePage />
+  } else {
+    return <HomePage />
+  }
 }
 
 function App() {
@@ -58,8 +69,8 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<HomePage />} />
+            {/* Home Route - Shows different content based on auth status */}
+            <Route path="/" element={<HomeRoute />} />
             
             {/* Auth Routes */}
             <Route 
@@ -82,18 +93,17 @@ function App() {
             {/* Search Routes */}
             <Route path="/search" element={<SearchPage />} />
             <Route path="/property/:id" element={<PropertyDetailPage />} />
-
-            {/* Protected Routes */}
+              {/* Protected Routes - Simplified Dashboard Routing */}
             <Route 
               path="/dashboard" 
               element={
                 <ProtectedRoute>
-                  <DashboardPage />
+                  <PropertySeekerDashboard />
                 </ProtectedRoute>
               } 
             />
             
-            {/* Landlord Routes */}
+            {/* Role-specific Dashboard Routes */}
             <Route 
               path="/dashboard/landlord" 
               element={
@@ -103,6 +113,42 @@ function App() {
               } 
             />
             <Route 
+              path="/dashboard/tenant" 
+              element={
+                <ProtectedRoute requiredRole="tenant">
+                  <TenantDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/seeker" 
+              element={
+                <ProtectedRoute>
+                  <PropertySeekerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/dashboard/propertySeeker" 
+              element={
+                <ProtectedRoute>
+                  <PropertySeekerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Debug route for testing */}
+            <Route 
+              path="/debug/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <DashboardTest />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* List Property */}
+            <Route 
               path="/list-property" 
               element={
                 <ProtectedRoute>
@@ -111,15 +157,7 @@ function App() {
               } 
             />
 
-            {/* Tenant Routes */}
-            <Route 
-              path="/dashboard/tenant" 
-              element={
-                <ProtectedRoute requiredRole="tenant">
-                  <TenantDashboard />
-                </ProtectedRoute>
-              } 
-            />
+            {/* Application Routes */}
             <Route 
               path="/apply/:propertyId" 
               element={
@@ -188,8 +226,6 @@ function App() {
             {/* Catch all route */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-
-
         </div>
       </Router>
     </QueryClientProvider>
@@ -200,11 +236,9 @@ function App() {
 const SearchPage = () => <div className="min-h-screen pt-20 px-4">Search Page - Coming Soon</div>
 const PropertyDetailPage = () => <div className="min-h-screen pt-20 px-4">Property Detail Page - Coming Soon</div>
 const DashboardPage = () => <div className="min-h-screen pt-20 px-4">Dashboard - Coming Soon</div>
-const TenantDashboard = () => <div className="min-h-screen pt-20 px-4">Tenant Dashboard - Coming Soon</div>
 const ListPropertyPage = () => <div className="min-h-screen pt-20 px-4">List Property - Coming Soon</div>
 const ApplicationPage = () => <div className="min-h-screen pt-20 px-4">Application Page - Coming Soon</div>
 const MessagesPage = () => <div className="min-h-screen pt-20 px-4">Messages - Coming Soon</div>
-const ProfilePage = () => <div className="min-h-screen pt-20 px-4">Profile - Coming Soon</div>
 const SettingsPage = () => <div className="min-h-screen pt-20 px-4">Settings - Coming Soon</div>
 const RentPaymentPage = () => <div className="min-h-screen pt-20 px-4">Rent Payment - Coming Soon</div>
 const MaintenanceRequestPage = () => <div className="min-h-screen pt-20 px-4">Maintenance Request - Coming Soon</div>

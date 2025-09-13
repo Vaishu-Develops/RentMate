@@ -676,6 +676,58 @@ const switchRole = async (req, res) => {
   }
 }
 
+// @desc    Add a new role to user
+// @route   POST /api/auth/add-role
+// @access  Private
+const addRole = async (req, res) => {
+  try {
+    const { role } = req.body
+
+    if (!role) {
+      return res.status(400).json({
+        success: false,
+        message: 'Role is required'
+      })
+    }
+
+    // Validate role
+    const validRoles = ['commonUser', 'tenant', 'landlord', 'admin']
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid role specified'
+      })
+    }
+
+    const user = await User.findById(req.user.id)
+
+    if (user.hasRole(role)) {
+      return res.status(400).json({
+        success: false,
+        message: 'User already has this role'
+      })
+    }
+
+    user.addRole(role)
+    await user.save()
+
+    res.status(200).json({
+      success: true,
+      message: `${role} role added successfully`,
+      data: {
+        roles: user.roles,
+        activeRole: user.activeRole
+      }
+    })
+  } catch (error) {
+    console.error('Add role error:', error)
+    res.status(500).json({
+      success: false,
+      message: 'Server error during role addition'
+    })
+  }
+}
+
 // @desc    Forgot password
 // @route   POST /api/auth/forgot-password
 // @access  Public
@@ -880,5 +932,6 @@ router.post('/verify-email', verifyEmail)
 router.get('/me', protect, getMe)
 router.put('/profile', protect, updateProfile)
 router.post('/switch-role', protect, switchRole)
+router.post('/add-role', protect, addRole)
 
 module.exports = router
