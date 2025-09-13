@@ -1,59 +1,36 @@
-import React from 'react'
-import { LogOut } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import useAuthStore from '@/store/authStore'
+﻿import React from 'react';
+import { LogOut } from 'lucide-react';
+import useAuthStore from '@/store/authStore';
 
-const LogoutButton = ({ 
-  variant = "outline", 
-  size = "default", 
-  className = "",
-  showIcon = true,
-  showText = true,
-  confirmLogout = true
-}) => {
-  const { logout } = useAuthStore()
+const LogoutButton = () => {
+  const { logout } = useAuthStore();
 
-  const handleLogout = async () => {
-    if (confirmLogout) {
-      const confirmAction = window.confirm('Are you sure you want to logout?')
-      if (!confirmAction) return
-    }
-
-    try {
-      // Clear any stored data
-      localStorage.removeItem('preferredCity')
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('refreshToken')
-      localStorage.removeItem('rentmate-auth')
-      
-      // Call logout from auth store
-      logout()
-      
-      // Redirect to home page
-      window.location.href = '/'
-    } catch (error) {
-      console.error('Logout error:', error)
-      // Force logout even if there's an error
-      logout()
-      window.location.href = '/'
-    }
-  }
+  const handleLogout = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Desktop logout button clicked!');
+    
+    logout();
+    localStorage.clear();
+    window.location.href = '/';
+  };
 
   return (
-    <Button 
-      variant={variant}
-      size={size}
+    <button
+      type="button"
       onClick={handleLogout}
-      className={`flex items-center gap-2 text-red-600 border-red-300 hover:bg-red-50 hover:border-red-400 hover:text-red-700 ${className}`}
       style={{
-        borderColor: '#fca5a5',
-        color: '#dc2626'
+        zIndex: 9999,
+        position: 'relative',
+        pointerEvents: 'auto',
+        cursor: 'pointer'
       }}
+      className="inline-flex items-center px-3 py-2 border border-red-300 text-sm font-medium rounded-md text-red-600 bg-white hover:bg-red-50 hover:text-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
     >
-      {showIcon && <LogOut className="w-4 h-4" />}
-      {showText && 'Logout'}
-    </Button>
-  )
-}
+      <LogOut className="w-4 h-4 mr-2" />
+      Logout
+    </button>
+  );
+};
 
-export default LogoutButton
+export default LogoutButton;

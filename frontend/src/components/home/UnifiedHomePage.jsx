@@ -213,7 +213,7 @@ const UnifiedHomePage = () => {
             <NavbarButton variant="secondary" href="/profile">
               Profile
             </NavbarButton>
-            <LogoutButton variant="outline" size="sm" />
+            <LogoutButton />
           </div>
         </NavBody>
         
@@ -253,12 +253,7 @@ const UnifiedHomePage = () => {
                 <Home className="w-4 h-4" />
                 <span>Home</span>
               </a>
-              <LogoutButton 
-                variant="ghost" 
-                size="sm" 
-                className="w-full justify-start text-red-600 hover:bg-red-50"
-                confirmLogout={false}
-              />
+              <LogoutButton />
             </div>
           </MobileNavMenu>
         </MobileNav>
